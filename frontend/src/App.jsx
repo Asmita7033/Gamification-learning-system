@@ -1,8 +1,8 @@
-import GameOnePage from './pages/GameOnePage'
+import GameTwoPage from './pages/GameTwoPage'
 import './App.css'
 
 function App() {
-  return <GameOnePage />
+  return <GameTwoPage />
 }
 
 export default App
