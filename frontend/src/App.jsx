@@ -1,8 +1,8 @@
-import DashboardPage from './pages/DashboardPage'
+import LearningModulePage from './pages/LearningModulePage'
 import './App.css'
 
 function App() {
-  return <DashboardPage />
+  return <LearningModulePage />
 }
 
 export default App
