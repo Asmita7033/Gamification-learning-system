@@ -1,8 +1,8 @@
-import ResultsPage from './pages/ResultsPage'
+import RewardsPage from './pages/RewardsPage'
 import './App.css'
 
 function App() {
-  return <ResultsPage />
+  return <RewardsPage />
 }
 
 export default App
