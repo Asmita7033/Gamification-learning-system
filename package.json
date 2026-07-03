@@ -2,8 +2,10 @@
   "name": "gamification-learning-system",
   "private": true,
   "scripts": {
-    "dev": "npm --prefix frontend run dev",
+    "dev": "node scripts/dev.js",
+    "dev:frontend": "npm --prefix frontend run dev",
+    "dev:backend": "python backend/manage.py runserver",
     "build": "npm --prefix frontend run build",
-    "dev:backend": "python backend/manage.py runserver"
+    "start": "node scripts/dev.js"
   }
 }
