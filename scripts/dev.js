@@ -1,4 +1,5 @@
 const { spawn } = require('child_process')
+const http = require('http')
 
 function start(name, command, args, cwd) {
   const child = spawn(command, args, {
@@ -17,6 +18,21 @@ function start(name, command, args, cwd) {
   return child
 }
 
+const redirectServer = http.createServer((req, res) => {
+  const target = `http://localhost:5173${req.url || '/'}`
+  res.statusCode = 302
+  res.setHeader('Location', target)
+  res.end(`Redirecting to ${target}`)
+})
+
+redirectServer.on('error', err => {
+  console.warn(`localhost redirect server could not start on port 80: ${err.message}`)
+})
+
+redirectServer.listen(80, () => {
+  console.log('http://localhost now redirects to http://localhost:5173')
+})
+
 const frontend = start(
   'frontend',
   'npm',
@@ -32,6 +48,10 @@ const backend = start(
 )
 
 function shutdown() {
+  if (redirectServer.listening) {
+    redirectServer.close()
+  }
+
   for (const child of [frontend, backend]) {
     if (child && !child.killed) {
       child.kill('SIGINT')
