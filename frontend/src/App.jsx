@@ -13,10 +13,20 @@ import './App.css'
 function App() {
   const [currentPage, setCurrentPage] = useState('dashboard')
   const [isLoggedIn, setIsLoggedIn] = useState(true)
+  const [currentLevel, setCurrentLevel] = useState(1)
+  const [xp, setXp] = useState(1240)
 
   const handleLogin = () => {
     setIsLoggedIn(true)
     setCurrentPage('dashboard')
+  }
+
+  const handleGameComplete = (xpEarned) => {
+    setXp(xp + xpEarned)
+    if (currentLevel < 8) {
+      setCurrentLevel(currentLevel + 1)
+    }
+    setCurrentPage('rewards')
   }
 
   if (!isLoggedIn) {
@@ -24,20 +34,21 @@ function App() {
   }
 
   const pages = {
-    dashboard: <DashboardPage onNavigate={setCurrentPage} />,
-    learning: <LearningModulePage onNavigate={setCurrentPage} />,
-    game1: <GameOnePage onNavigate={setCurrentPage} />,
-    game2: <GameTwoPage onNavigate={setCurrentPage} />,
-    game3: <GameThreePage onNavigate={setCurrentPage} />,
-    game4: <GameFourPage onNavigate={setCurrentPage} />,
-    results: <ResultsPage onNavigate={setCurrentPage} />,
-    rewards: <RewardsPage onNavigate={setCurrentPage} />,
+    dashboard: <DashboardPage onNavigate={setCurrentPage} currentLevel={currentLevel} xp={xp} />,
+    learning: <LearningModulePage onNavigate={setCurrentPage} currentLevel={currentLevel} />,
+    game1: <GameOnePage onNavigate={setCurrentPage} onComplete={handleGameComplete} currentLevel={currentLevel} />,
+    game2: <GameTwoPage onNavigate={setCurrentPage} onComplete={handleGameComplete} currentLevel={currentLevel} />,
+    game3: <GameThreePage onNavigate={setCurrentPage} onComplete={handleGameComplete} currentLevel={currentLevel} />,
+    game4: <GameFourPage onNavigate={setCurrentPage} onComplete={handleGameComplete} currentLevel={currentLevel} />,
+    results: <ResultsPage onNavigate={setCurrentPage} currentLevel={currentLevel} xp={xp} />,
+    rewards: <RewardsPage onNavigate={setCurrentPage} currentLevel={currentLevel} xp={xp} nextLevel={() => setCurrentPage('dashboard')} />,
   }
 
   return (
     <div className="app-container">
       <nav className="app-nav">
         <div className="nav-brand">🎮 MathQuest</div>
+        <div className="nav-level">Level {currentLevel} • {xp} XP</div>
         <div className="nav-buttons">
           <button
             onClick={() => setCurrentPage('dashboard')}

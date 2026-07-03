@@ -46,6 +46,12 @@ button:focus-visible {
   letter-spacing: -0.5px;
 }
 
+.nav-level {
+  font-size: 0.875rem;
+  color: #06b6d4;
+  font-weight: 600;
+}
+
 .nav-buttons {
   display: flex;
   gap: 0.5rem;
